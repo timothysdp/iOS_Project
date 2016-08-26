@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>quanhuang</string>
+		<key>description</key>
+		<string>拳皇童年版</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>tielian</string>
+		<key>description</key>
+		<string>铁链?你特么在逗我?</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>afanda</string>
+		<key>description</key>
+		<string>阿凡达,cos 的不太像,可是谁在乎呢?</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>superhero</string>
+		<key>description</key>
+		<string>超级英雄?其实都是用钱堆出来的</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>nima</string>
+		<key>description</key>
+		<string>尼玛,我终于找到你了</string>
+	</dict>
+</array>
+</plist>
