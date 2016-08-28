@@ -25,9 +25,7 @@
 +(instancetype)questionWithDict:(NSDictionary *)dict{
     
     return [[self alloc]initWithDict:dict];
-    
 }
-
 
 -(UIImage *)image{
     
@@ -41,7 +39,7 @@
 //快速创建模型的方法
 +(NSArray *)questions{
     
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"question.plist" ofType:nil];
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"questions" ofType:nil];
     NSArray *array = [NSArray arrayWithContentsOfFile:path];
     
     NSMutableArray *arrayM = [NSMutableArray arrayWithCapacity:array.count];
@@ -52,5 +50,4 @@
     }
     return [arrayM copy];
 }
-
 @end

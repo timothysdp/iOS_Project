@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4458C2361D7216BF0020F94D"
+               BlueprintIdentifier = "4458C27C1D72FF570020F94D"
                BuildableName = "SuperGuessImage.app"
                BlueprintName = "SuperGuessImage"
                ReferencedContainer = "container:SuperGuessImage.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4458C24F1D7216C00020F94D"
+               BlueprintIdentifier = "4458C2951D72FF570020F94D"
                BuildableName = "SuperGuessImageTests.xctest"
                BlueprintName = "SuperGuessImageTests"
                ReferencedContainer = "container:SuperGuessImage.xcodeproj">
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4458C25A1D7216C00020F94D"
+               BlueprintIdentifier = "4458C2A01D72FF570020F94D"
                BuildableName = "SuperGuessImageUITests.xctest"
                BlueprintName = "SuperGuessImageUITests"
                ReferencedContainer = "container:SuperGuessImage.xcodeproj">
@@ -52,7 +52,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4458C2361D7216BF0020F94D"
+            BlueprintIdentifier = "4458C27C1D72FF570020F94D"
             BuildableName = "SuperGuessImage.app"
             BlueprintName = "SuperGuessImage"
             ReferencedContainer = "container:SuperGuessImage.xcodeproj">
@@ -75,7 +75,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4458C2361D7216BF0020F94D"
+            BlueprintIdentifier = "4458C27C1D72FF570020F94D"
             BuildableName = "SuperGuessImage.app"
             BlueprintName = "SuperGuessImage"
             ReferencedContainer = "container:SuperGuessImage.xcodeproj">
@@ -94,7 +94,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4458C2361D7216BF0020F94D"
+            BlueprintIdentifier = "4458C27C1D72FF570020F94D"
             BuildableName = "SuperGuessImage.app"
             BlueprintName = "SuperGuessImage"
             ReferencedContainer = "container:SuperGuessImage.xcodeproj">

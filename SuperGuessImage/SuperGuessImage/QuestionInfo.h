@@ -14,9 +14,7 @@
 @property (copy, nonatomic) NSString *answer;
 @property (copy, nonatomic) NSString *icon;
 @property (copy, nonatomic) NSString *title;
-
-@property (strong, nonatomic) NSArray *options;
-
+@property (copy, nonatomic) NSArray *options;
 
 -(instancetype)initWithDict:(NSDictionary *)dict;
 +(instancetype)questionWithDict:(NSDictionary *)dict;
@@ -24,8 +22,7 @@
 //icon 可以转化成一个image属性
 //模型数组可以用一个类方法实现
 
-@property (strong, nonatomic, readonly) UIImage *image;
+@property (strong, nonatomic,readonly) UIImage *image;
 
 +(NSArray *)questions;
-
 @end
