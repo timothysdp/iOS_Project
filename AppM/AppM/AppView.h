@@ -12,6 +12,7 @@
 @class AppInfo;
 
 //这里用代理的方式实现类与类的通信，完成点击事件
+//当协议多文件调用的时候，可以单独建协议文件，此处直接写在文件中了
 @protocol AppViewDelegate <NSObject>
 
 @optional

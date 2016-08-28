@@ -86,13 +86,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark - AppViewDelegate
 
+#pragma mark - AppViewDelegate
 
 -(void)downLoadClickWithButton:(UIButton *)button{
     
-    
-    //通过强转，从button的父视图拿到
+//通过强转，从button的父视图拿到
     AppView *appView = (AppView *)button.superview;
 //    拿到应用的名字
     NSString *appName = appView.appInfo.name;
