@@ -24,7 +24,7 @@
                                 <state key="normal" title="大图" image="icon_img" backgroundImage="btn_right"/>
                                 <state key="highlighted" image="icon_img" backgroundImage="btn_right_highlighted"/>
                                 <connections>
-                                    <action selector="imageButtonChangeOnClick" destination="BYZ-38-t0r" eventType="touchUpInside" id="OkE-kE-84C"/>
+                                    <action selector="imageButtonChangeOnClick" destination="BYZ-38-t0r" eventType="touchUpInside" id="KiI-dw-oU4"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hy0-7M-05v">
@@ -54,7 +54,7 @@
                                 <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                 <state key="normal" image="movie_ygbh" backgroundImage="center_img"/>
                                 <connections>
-                                    <action selector="imageButtonChangeOnClick" destination="BYZ-38-t0r" eventType="touchUpInside" id="2pL-h1-yim"/>
+                                    <action selector="imageButtonChangeOnClick" destination="BYZ-38-t0r" eventType="touchUpInside" id="JMW-hT-MO7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bDN-1W-7H3">
@@ -105,7 +105,7 @@
                         <outlet property="answerView" destination="bJA-Fx-3II" id="ho8-Zj-40W"/>
                         <outlet property="coinButton" destination="ijM-xL-9TR" id="f98-xD-TWT"/>
                         <outlet property="descLabel" destination="YxG-RA-qRe" id="Mzm-aq-LKP"/>
-                        <outlet property="imageInsideButton" destination="4vx-mV-X7I" id="R6i-wM-T1m"/>
+                        <outlet property="imageInsideButton" destination="nW2-3f-UdQ" id="LyR-aT-tBD"/>
                         <outlet property="nextButton" destination="y2E-Dt-HRn" id="Z88-q4-UbU"/>
                         <outlet property="optionsView" destination="zOd-Xd-lXc" id="hMb-pO-Fsf"/>
                         <outlet property="topIndexLabel" destination="Hy0-7M-05v" id="BfK-z2-FqR"/>

@@ -9,6 +9,10 @@
 #import "ViewController.h"
 #import "QuestionInfo.h"
 
+
+CGFloat const imageW = 150;
+#define kScreenW [UIScreen mainScreen].bounds.size.width
+
 @interface ViewController ()
 /**
  *顶部索引
@@ -99,6 +103,36 @@
  *大图、遮盖/中间，三个按钮的点击事件
  */
 - (IBAction)imageButtonChangeOnClick {
+    
+//    将中间图片按钮放置最顶层
+    [self.view bringSubviewToFront:self.imageInsideButton];
+    //        如果遮盖的透明度 =0，图片就是放大的
+    if (0 == self.cover.alpha) {
+        //        图片放大事件
+        CGFloat scaleX = kScreenW / imageW;
+        //        因为宽高是等比例变化
+        CGFloat scaleY = scaleX;
+        
+//        Y方向上的偏移量
+        CGFloat translateY = self.imageInsideButton.frame.origin.y / scaleX;
+        
+        //        因为形变是在动画中显现的
+        [UIView animateWithDuration:1.0 animations:^{
+            self.imageInsideButton.transform = CGAffineTransformMakeScale(scaleX, scaleY);
+            
+            self.imageInsideButton.transform = CGAffineTransformTranslate(self.imageInsideButton.transform, 0, translateY);
+            //        遮盖显现
+            self.cover.alpha = 0.5;
+        }];
+    }else{
+        //        图片还原事件
+        [UIView animateWithDuration:1.0 animations:^{
+            self.imageInsideButton.transform = CGAffineTransformIdentity;
+            self.cover.alpha = 0.0;
+        }];
+        
+    }
+
 }
 /**
  *下一题点击事件
