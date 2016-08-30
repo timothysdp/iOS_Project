@@ -20,9 +20,7 @@
 +(instancetype)questionWithDict:(NSDictionary *)dict;
 
 //icon 可以转化成一个image属性
-//模型数组可以用一个类方法实现
-
 @property (strong, nonatomic,readonly) UIImage *image;
-
+//模型数组可以用一个类方法实现
 +(NSArray *)questions;
 @end

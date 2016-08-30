@@ -9,9 +9,24 @@
 #import "ViewController.h"
 #import "QuestionInfo.h"
 
-
-CGFloat const imageW = 150;
+//写死的常量，就用const来定义，需要计算的，就用宏定义
+//CGFloat const imageW = 150;
+//图片宽度进行宏定义
+#define imageW self.imageInsideButton.bounds.size.width
 #define kScreenW [UIScreen mainScreen].bounds.size.width
+#define kAnswerButtonTitleColor [UIColor blackColor]
+
+/**
+ *常量,
+ */
+CGFloat const kButtonW = 35;
+CGFloat const kButtonH = 35;
+CGFloat const kMarginBetweenButtons = 10;
+NSInteger const kOptionViewTotalCol = 7;
+
+NSInteger const kTrueAddScore = 200;
+NSInteger const kFalseDecreaseScore = -200;
+NSInteger const kTipDecreaseScore = -200;
 
 @interface ViewController ()
 /**
@@ -58,6 +73,8 @@ CGFloat const imageW = 150;
  */
 @property (strong, nonatomic) UIButton *cover;
 
+@property (assign, nonatomic) int ff;
+
 @end
 
 @implementation ViewController
@@ -65,7 +82,7 @@ CGFloat const imageW = 150;
 //懒加载，retuen 模型数组
 -(NSArray *)questions{
     
-    if (!_questions) {
+    if (nil == _questions) {
         
         _questions = [QuestionInfo questions];
     }
@@ -75,7 +92,7 @@ CGFloat const imageW = 150;
 //懒加载 return 遮盖
 -(UIButton *)cover{
     
-    if (!_cover) {
+    if (nil == _cover) {
         _cover = [[UIButton alloc]init];
         _cover.frame = self.view.bounds;
         _cover.alpha = 0.0;
@@ -91,8 +108,31 @@ CGFloat const imageW = 150;
 
 /**
  *提示按钮点击事件
+ *这里还可以改进，提示的时候，只能提示第一个字，不够人性化，并且一道题可以多次提示，不符合逻辑
  */
 - (IBAction)tipButtonOnClick {
+/**
+*#warning noCode
+*当方法没写完，可以先写一个警告，方便后期修改
+*/
+//    清空答案按钮内文字
+//    一种是模拟按钮点击，清空
+    for (UIButton *answerButton in self.answerView.subviews) {
+        [self answerButtonOnClick:answerButton];
+    }
+//    取出答案中的第一个字
+    NSString *answer = [self.questions[self.index]answer];
+    NSString *firstrWord = [answer substringToIndex:1];
+//    模拟点击optionView中第一个正确的按钮，扣分
+    for (UIButton *optionButton in self.optionsView.subviews) {
+        
+        if ([optionButton.currentTitle isEqualToString:firstrWord]) {
+            
+            [self optionButtonOnClick:optionButton];
+            [self coinChinge:kTipDecreaseScore];
+            break;
+        }
+    }
 }
 /**
  *帮助按钮点击事件
@@ -138,16 +178,238 @@ CGFloat const imageW = 150;
  *下一题点击事件
  */
 - (IBAction)nextButtonOnClick {
+//    此处写的是伪代码，后期需要新的view模块来升级
+//    1.索引自增，并判断是否越界
+    self.index ++;
+    
+    
+    
+    NSLog(@"index == %d", self.index);
+    NSLog(@"self.questions.count == %d", self.questions.count);
+    
+    if (self.index >= self.questions.count) {
+        NSLog(@"恭喜过关！");
+        self.index --;
+        return;
+    }
+//    2.取出模型
+    QuestionInfo *question = self.questions[self.index];
+//    3.设计基本信息
+    [self setupBaseInfo:question];
+//    4.创建答案按钮
+    [self createAnswerButtons:question];
+//    5.创建备选答案按钮
+    [self createOptionButtons:question];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+//    这里可以让首页第一题就出现备选答案
+    self.index = -1;
+    [self nextButtonOnClick];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - 私有方法
+/**
+ *设置基本信息
+ */
+-(void)setupBaseInfo:(QuestionInfo *)question{
+////    恢复optionView的用户交互
+//    self.optionsView.userInteractionEnabled = YES;
+//    顶部图片索引改变
+    self.topIndexLabel.text = [NSString stringWithFormat:@"%d/%d",self.index+1,self.questions.count];
+//    图片种类描述改变
+    self.descLabel.text = question.title;
+//    图片改变
+    [self.imageInsideButton setImage:question.image forState:UIControlStateNormal];
+//    下一题点击按钮状态，当索引到最后的时候，按钮时不能点击的
+    self.nextButton.enabled = (self.index != self.questions.count - 1);
+}
+/**
+ *创建答案按钮
+ */
+-(void)createAnswerButtons:(QuestionInfo *)question{
+//    创建答案按钮的时候，先要看之前是没有按钮的，所以要先清空一下,清空answerView
+    for (UIButton * button in self.answerView.subviews) {
+        [button removeFromSuperview];
+    }
+//    确定答案按钮的数量
+    NSInteger answerButtonCount = question.answer.length;
+//    第一个按钮和最后一个按钮与屏幕之间的间距
+    CGFloat answerW = self.answerView.bounds.size.width;
+//    计算间距
+    CGFloat answerEdgeInset = (answerW - answerButtonCount * kButtonW - (answerButtonCount - 1) * kMarginBetweenButtons) * 0.5;
+//    用for循环来创建按钮
+    for (int i = 0; i < answerButtonCount; i++) {
+        
+        UIButton * button = [[UIButton alloc]init];
+//        设置frame值，因为只有一行
+//        先计算X的值
+        CGFloat buttonX = answerEdgeInset + i * (kButtonW + kMarginBetweenButtons);
+        button.frame = CGRectMake(buttonX, 0, kButtonW, kButtonH);
+//        设置背景图片
+        [button setBackgroundImage:[UIImage imageNamed:@"btn_answer"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"btn_answer_highlighted"] forState:UIControlStateHighlighted];
+//        设置字体颜色
+        [button setTitleColor:kAnswerButtonTitleColor forState:UIControlStateNormal];
+//        设置按钮的点击事件
+        [button addTarget:self action:@selector(answerButtonOnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        将button添加到answerVIew上
+        [self.answerView addSubview:button];
+    }
+}
+/**
+ *创建备选答案按钮
+ */
+-(void)createOptionButtons:(QuestionInfo *)question{
+    
+//    提取出来，相对严谨一些
+    int optionsCount = question.options.count;
+//    判断optionsView的subview的数量
+    if (self.optionsView.subviews.count != optionsCount) {
+//        若没有按钮，就创建
+        CGFloat optionW = self.optionsView.bounds.size.width;
+        //    计算间距
+        CGFloat optionEdgeInset = (optionW - kOptionViewTotalCol * kButtonW - (kOptionViewTotalCol - 1) * kMarginBetweenButtons) * 0.5;
+//        for虚幻创建按钮
+//        算行数，列数
+        for (int i = 0; i < optionsCount; i++) {
+            int col = i % kOptionViewTotalCol;
+            int row = i / kOptionViewTotalCol;
+//            用类方法创建的按钮
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//            计算X，Y
+            CGFloat buttonX = optionEdgeInset + (kButtonW + kMarginBetweenButtons) * col;
+            CGFloat buttonY = kMarginBetweenButtons + (kButtonH + kMarginBetweenButtons) * row;
+            button.frame = CGRectMake(buttonX, buttonY, kButtonW, kButtonH);
+            
+            //        设置背景图片
+            [button setBackgroundImage:[UIImage imageNamed:@"btn_answer"] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage imageNamed:@"btn_answer_highlighted"] forState:UIControlStateHighlighted];
+            //        设置字体颜色
+            [button setTitleColor:kAnswerButtonTitleColor forState:UIControlStateNormal];
+            //        设置按钮的点击事件
+            [button addTarget:self action:@selector(optionButtonOnClick:) forControlEvents:UIControlEventTouchUpInside];
+            //        将button添加到answerVIew上
+            [self.optionsView addSubview:button];
+
+        }
+//        如果有了，就没必要再重新创建，更改字符创就可以了
+    }
+    for (int i = 0; i < optionsCount; i++) {
+        UIButton *optionButton = self.optionsView.subviews[i];
+//        将字符串改变一下
+        [optionButton setTitle:question.options[i] forState:UIControlStateNormal];
+//        button的隐藏属性
+        optionButton.hidden = NO;
+    }
+}
+
+#pragma mark - 下面按钮的点击方法
+//答案按钮点击方法
+-(void)answerButtonOnClick:(UIButton *)answerButton{
+    
+    NSString *answerStr = answerButton.currentTitle;
+//    先判断答案中时候有文字,若为空，直接返回
+    if (nil == answerStr) {
+        return;
+    }
+//    1.若不为空，去掉按钮内文字
+    [answerButton setTitle:nil forState:UIControlStateNormal];
+//    2.恢复optionView中隐藏的按钮
+    for (UIButton *optionButton in self.optionsView.subviews) {
+        if ([answerStr isEqualToString:optionButton.currentTitle] && optionButton.isHidden) {
+            optionButton.hidden = NO;
+            break;
+        }
+    }
+//    3.若字体颜色不对，则恢复成黑色
+    if (answerButton.currentTitleColor != kAnswerButtonTitleColor) {
+        for (UIButton *answerButton in self.answerView.subviews) {
+            [answerButton setTitleColor:kAnswerButtonTitleColor forState:UIControlStateNormal];
+        }
+        
+//        恢复optionView的用户交互
+        self.optionsView.userInteractionEnabled = YES;
+    }
+}
+//备选答案按钮点击方法
+-(void)optionButtonOnClick:(UIButton *)optionButton{
+//    先把备选答案中的字拿出来
+    NSString *optionStr = optionButton.currentTitle;
+//    1.填字进answerView
+    for (UIButton *answerButton in self.answerView.subviews) {
+        if (nil == answerButton.currentTitle) {
+            
+            [answerButton setTitle:optionStr forState:UIControlStateNormal];
+            break;
+        }
+    }
+//    2.隐藏按钮
+    optionButton.hidden = YES;
+//    3.当字answerView中的字填满的时候
+    BOOL isFull = YES;
+    
+    NSMutableString *stringM = [NSMutableString string];
+    for (UIButton *answerButton in self.answerView.subviews) {
+        if (nil == answerButton.currentTitle) {
+            isFull = NO;
+            break;
+            
+        }else{
+//    将答案区中的字拼成一个字符串
+            [stringM appendString:answerButton.currentTitle];
+        }
+    }
+
+    if (YES == isFull) {
+        self.optionsView.userInteractionEnabled = NO;
+        
+        NSString *answer = [self.questions[self.index] answer];
+        if ([stringM isEqualToString:answer]) {
+            for (UIButton *answerButton in self.answerView.subviews) {
+                [answerButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            }
+//    相同，全部变蓝，加分，一秒后进入下一题
+                [self coinChinge:kTrueAddScore];
+/**
+ *恢复optionView的用户交互，重点，这里使用恢复用户交互，和setupBaseInfo方法在开头使用的都可以，但是具体有什么不同，再测
+ */
+                self.optionsView.userInteractionEnabled = YES;
+                [self performSelector:@selector(nextButtonOnClick) withObject:nil afterDelay:1.0];
+//                测试
+                self.ff++;
+                NSLog(@"ff = = = =>%d",self.ff);
+                
+            
+        }else{
+//    与答案比较，不同，全部为红并扣分
+            for (UIButton *answerButton in self.answerView.subviews) {
+                [answerButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                //    相同，全部变蓝，加分，一秒后进入下一题
+                [self coinChinge:kFalseDecreaseScore];
+                
+            
+        }
+    }
+
+}
+}
+    
+#pragma mark - 分数变化
+-(void)coinChinge:(NSInteger)delCoin{
+    // 获取当前金钱数量
+    NSInteger currentCoin = [self.coinButton.currentTitle integerValue];
+    // 改变金钱数量
+    currentCoin += delCoin;
+    // 重置金钱数量
+    NSString *coinStr = [NSString stringWithFormat:@"%d", currentCoin];
+    [self.coinButton setTitle:coinStr forState:UIControlStateDisabled];}
 
 @end
