@@ -154,19 +154,18 @@ NSInteger const kTipDecreaseScore = -200;
     for (int i = 0; i <= answer.length; i++) {
         [answerM addObject:[answer substringWithRange:NSMakeRange(i-1, 1)]];
     }
-    NSLog(@"answerM is :%@",answerM);
+//    NSLog(@"answerM is :%@",answerM);
     for (NSString *string in answerM) {
         for (UIButton *optionButton in self.optionsView.subviews) {
             if ([optionButton.currentTitle isEqualToString:string]) {
+//                [self tar]
                 [self optionButtonOnClick:optionButton];
+//                [self performSelector:@selector(optionButtonOnClick:) withObject:optionButton afterDelay:2.0];
                 [self coinChinge:kTipDecreaseScore];
                 break;
             }
         }
     }
-//    for (UIButton *answerHelp in <#collection#>) {
-//        <#statements#>
-//    }
 }
 /**
  *大图、遮盖/中间，三个按钮的点击事件
@@ -413,7 +412,6 @@ NSInteger const kTipDecreaseScore = -200;
  */
                 self.optionsView.userInteractionEnabled = YES;
                 [self performSelector:@selector(nextButtonOnClick) withObject:nil afterDelay:1.0];
-//                测试
                 
             
         }else{
