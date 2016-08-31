@@ -105,8 +105,9 @@
                         <outlet property="answerView" destination="bJA-Fx-3II" id="ho8-Zj-40W"/>
                         <outlet property="coinButton" destination="ijM-xL-9TR" id="f98-xD-TWT"/>
                         <outlet property="descLabel" destination="YxG-RA-qRe" id="Mzm-aq-LKP"/>
+                        <outlet property="helpButton" destination="T2a-mo-3HM" id="zwt-MH-ZKT"/>
                         <outlet property="imageInsideButton" destination="nW2-3f-UdQ" id="LyR-aT-tBD"/>
-                        <outlet property="nextButton" destination="y2E-Dt-HRn" id="Z88-q4-UbU"/>
+                        <outlet property="nextButton" destination="y2E-Dt-HRn" id="bVe-TQ-VoA"/>
                         <outlet property="optionsView" destination="zOd-Xd-lXc" id="hMb-pO-Fsf"/>
                         <outlet property="topIndexLabel" destination="Hy0-7M-05v" id="BfK-z2-FqR"/>
                     </connections>

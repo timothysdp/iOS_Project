@@ -108,10 +108,10 @@
 			children = (
 				4458C2831D72FF570020F94D /* AppDelegate.h */,
 				4458C2841D72FF570020F94D /* AppDelegate.m */,
-				4458C2861D72FF570020F94D /* ViewController.h */,
-				4458C2871D72FF570020F94D /* ViewController.m */,
 				4458C2B71D7316700020F94D /* QuestionInfo.h */,
 				4458C2B81D7316700020F94D /* QuestionInfo.m */,
+				4458C2861D72FF570020F94D /* ViewController.h */,
+				4458C2871D72FF570020F94D /* ViewController.m */,
 				4458C2B31D7315E20020F94D /* Images.xcassets */,
 				4458C2891D72FF570020F94D /* Main.storyboard */,
 				4458C28E1D72FF570020F94D /* LaunchScreen.storyboard */,
@@ -509,6 +509,7 @@
 				4458C2AC1D72FF570020F94D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4458C2AD1D72FF570020F94D /* Build configuration list for PBXNativeTarget "SuperGuessImageTests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +518,7 @@
 				4458C2AF1D72FF570020F94D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4458C2B01D72FF570020F94D /* Build configuration list for PBXNativeTarget "SuperGuessImageUITests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +527,7 @@
 				4458C2B21D72FF570020F94D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

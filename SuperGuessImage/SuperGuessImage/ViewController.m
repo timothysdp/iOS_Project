@@ -58,6 +58,8 @@ NSInteger const kTipDecreaseScore = -200;
  *显示备选答案按钮的视图
  */
 @property (weak, nonatomic) IBOutlet UIView *optionsView;
+@property (weak, nonatomic) IBOutlet UIButton *helpButton;
+
 
 /**
  *创建一个模型数组
@@ -72,8 +74,6 @@ NSInteger const kTipDecreaseScore = -200;
  *遮盖按钮
  */
 @property (strong, nonatomic) UIButton *cover;
-
-@property (assign, nonatomic) int ff;
 
 @end
 
@@ -91,7 +91,9 @@ NSInteger const kTipDecreaseScore = -200;
 
 //懒加载 return 遮盖
 -(UIButton *)cover{
-    
+/**
+ *这里有bug，第一次点击的时候，全屏都暗了
+ */
     if (nil == _cover) {
         _cover = [[UIButton alloc]init];
         _cover.frame = self.view.bounds;
@@ -102,6 +104,7 @@ NSInteger const kTipDecreaseScore = -200;
         //        按钮添加到view上
         [self.view addSubview:_cover];
     }
+    
     return _cover;
 }
 
@@ -109,6 +112,8 @@ NSInteger const kTipDecreaseScore = -200;
 /**
  *提示按钮点击事件
  *这里还可以改进，提示的时候，只能提示第一个字，不够人性化，并且一道题可以多次提示，不符合逻辑
+ *理想的提示是：判断第一个字是否正确，如果不正确就全部清空，显示第一个正确的；
+ *当第一个字正确的时候，判断下一个时候正确，不正确清空当前的字包括后面的字，显示当前位置正确的字
  */
 - (IBAction)tipButtonOnClick {
 /**
@@ -136,8 +141,32 @@ NSInteger const kTipDecreaseScore = -200;
 }
 /**
  *帮助按钮点击事件
+ *这里还有个问题。扣分是固定的，后期升级按比例。
+ *helpButton的enable能不能后期放到setupBaseInfo中？
  */
 - (IBAction)helpButtonOnClick {
+    for (UIButton *answerButton in self.answerView.subviews) {
+        [self answerButtonOnClick:answerButton];
+    }
+    
+    NSString *answer = [self.questions[self.index]answer];
+    NSMutableArray *answerM = [NSMutableArray arrayWithCapacity:answer.length];
+    for (int i = 0; i <= answer.length; i++) {
+        [answerM addObject:[answer substringWithRange:NSMakeRange(i-1, 1)]];
+    }
+    NSLog(@"answerM is :%@",answerM);
+    for (NSString *string in answerM) {
+        for (UIButton *optionButton in self.optionsView.subviews) {
+            if ([optionButton.currentTitle isEqualToString:string]) {
+                [self optionButtonOnClick:optionButton];
+                [self coinChinge:kTipDecreaseScore];
+                break;
+            }
+        }
+    }
+//    for (UIButton *answerHelp in <#collection#>) {
+//        <#statements#>
+//    }
 }
 /**
  *大图、遮盖/中间，三个按钮的点击事件
@@ -189,6 +218,7 @@ NSInteger const kTipDecreaseScore = -200;
     
     if (self.index >= self.questions.count) {
         NSLog(@"恭喜过关！");
+        self.helpButton.enabled = NO;
         self.index --;
         return;
     }
@@ -384,8 +414,6 @@ NSInteger const kTipDecreaseScore = -200;
                 self.optionsView.userInteractionEnabled = YES;
                 [self performSelector:@selector(nextButtonOnClick) withObject:nil afterDelay:1.0];
 //                测试
-                self.ff++;
-                NSLog(@"ff = = = =>%d",self.ff);
                 
             
         }else{
@@ -394,8 +422,6 @@ NSInteger const kTipDecreaseScore = -200;
                 [answerButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
                 //    相同，全部变蓝，加分，一秒后进入下一题
                 [self coinChinge:kFalseDecreaseScore];
-                
-            
         }
     }
 
