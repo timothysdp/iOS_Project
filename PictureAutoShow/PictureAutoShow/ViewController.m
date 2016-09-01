@@ -26,7 +26,9 @@ CGFloat pageCtrlWidth = 200;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self initScrollView];
+    [self initPageContrl];
 }
+//创建UIScrollView
 -(void)initScrollView{
     
     self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, scrollY, kScreenWidth, kScreenHeight)];
@@ -42,6 +44,16 @@ CGFloat pageCtrlWidth = 200;
 //    设置分页功能
     self.scrollView.pagingEnabled = YES;
     [self.view addSubview:self.scrollView];
+}
+
+-(void)initPageContrl{
+    
+    self.pageCtrl = [[UIPageControl alloc]initWithFrame:CGRectMake((kScreenWidth - pageCtrlWidth) / 2, kScreenHeight - scrollY, pageCtrlWidth, scrollY)];
+    self.pageCtrl.numberOfPages = kImageCount;
+    self.pageCtrl.pageIndicatorTintColor = [UIColor greenColor];
+    self.pageCtrl.currentPageIndicatorTintColor = [UIColor yellowColor];
+//    这里添加试图是在view上，而不是在ScrollView上，所以使用插入视图
+    [self.view insertSubview:self.pageCtrl aboveSubview:self.scrollView];
 }
 
 - (void)didReceiveMemoryWarning {
