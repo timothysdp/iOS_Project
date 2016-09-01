@@ -54,13 +54,10 @@
 //    #warning noCode
     return self.dataArray.count;
 }
-//- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-//    return self.dataArray.;
-//}
-//
-//- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-//    return 50;
-//}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return self.dataArray[row % self.dataArray.count];
+}
 
 #pragma mark - UIPickerViewDelegate
 
@@ -71,12 +68,13 @@
     }
     countryView.countryModel = self.dataArray[row];
     
-    
     return countryView;
     
 }
 
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
+    
+    NSLog(@"rowHeight is %f",[CountryFlagsView rowHeight]);
     return [CountryFlagsView rowHeight];
 }
 
