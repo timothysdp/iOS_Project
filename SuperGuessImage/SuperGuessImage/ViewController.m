@@ -218,6 +218,7 @@ NSInteger const kTipDecreaseScore = -200;
     if (self.index >= self.questions.count) {
         NSLog(@"恭喜过关！");
         self.helpButton.enabled = NO;
+        self.optionsView.userInteractionEnabled = NO;
         self.index --;
         return;
     }
